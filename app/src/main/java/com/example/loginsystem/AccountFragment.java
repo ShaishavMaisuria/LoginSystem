@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class AccountFragment extends Fragment {
@@ -46,11 +47,15 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle(this.mAccount.getName());
+        getActivity().setTitle("Account");
         // Inflate the layout for this fragment
         Log.d("test","Account On CreateView, before view");
         View  view= inflater.inflate(R.layout.fragment_account, container, false);
         Log.d("test","Account On CreateView, after view");
+
+        TextView name=view.findViewById(R.id.textViewNameAccount);
+        name.setText(mAccount.getName());
+
         return view;
     }
 }
