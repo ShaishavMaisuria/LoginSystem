@@ -30,6 +30,7 @@ public class AccountFragment extends Fragment {
         Log.d("test","Account new Instance");
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
@@ -38,7 +39,7 @@ public class AccountFragment extends Fragment {
         if(getArguments()!=null){
             //
             mAccount=(DataServices.Account) getArguments().getSerializable(ARG_PARAM_ACCOUNT);
-            Log.d("test","Account On Create, mAccount");
+            Log.d("test","Account On Create, mAccount"+mAccount.getEmail());
         }
     }
 

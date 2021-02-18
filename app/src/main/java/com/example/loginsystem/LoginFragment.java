@@ -68,6 +68,10 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getActivity(),"Unable to login",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(),"Login Successfull",Toast.LENGTH_SHORT).show();
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.rootView, AccountFragment.newInstance(account))
+                        .commit();
             }
 
             }
