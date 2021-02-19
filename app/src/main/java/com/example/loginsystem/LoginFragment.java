@@ -3,6 +3,7 @@ package com.example.loginsystem;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.renderscript.ScriptGroup;
@@ -68,10 +69,8 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getActivity(),"Unable to login",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(),"Login Successfull",Toast.LENGTH_SHORT).show();
+                mListener.loginIsSuccessful(account);
 
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.rootView, AccountFragment.newInstance(account))
-                        .commit();
             }
 
             }
@@ -81,12 +80,27 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
                 Log.d("test","Login createbutton pushed");
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.rootView,new RegisterFragment())
-                            .commit();
+                mListener.gotoRegistration();
 
             }
         });
         return view;
+    }
+
+    LoginListener mListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof LoginListener) {
+            mListener = (LoginListener) context;
+        }else{
+            throw  new RuntimeException((context.toString()+"must implement loginlistener"));
+        }
+    }
+
+    interface LoginListener {
+        void loginIsSuccessful(DataServices.Account account);
+        void gotoRegistration();
     }
 }

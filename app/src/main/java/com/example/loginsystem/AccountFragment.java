@@ -1,7 +1,9 @@
 package com.example.loginsystem;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -9,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.lang.invoke.ConstantCallSite;
 
 
 public class AccountFragment extends Fragment {
@@ -18,7 +22,9 @@ public class AccountFragment extends Fragment {
 
 
     private DataServices.Account mAccount;
-
+public void setAccountDetails(DataServices.Account accountDetails){
+    this.mAccount=accountDetails;
+}
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -56,6 +62,38 @@ public class AccountFragment extends Fragment {
         TextView name=view.findViewById(R.id.textViewNameAccount);
         name.setText(mAccount.getName());
 
+        view.findViewById(R.id.buttonEditProfileAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                mListener.gotoUpdate();
+            }
+        });
+
+
+
+        view.findViewById(R.id.buttonLogOutAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.logout();
+                //getFragmentManager().beginTransaction().replace(R.id.rootView,new LoginFragment()).commit();
+            }
+        });
+
         return view;
+    }
+
+    AccountListener mListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListener = (AccountListener) context;
+    }
+
+    interface AccountListener{
+        void gotoUpdate();
+        void logout();
     }
 }
