@@ -1,5 +1,7 @@
 package com.example.loginsystem;
-
+/*
+* @author Shaishav Maisuria
+ */
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     @Override
     public void gotoUpdate() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rootView,UpdateFragment.newInstance(mAccount))
+                .replace(R.id.rootView,UpdateFragment.newInstance(this.mAccount))
                 .addToBackStack(null)
                 .commit();
     }

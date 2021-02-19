@@ -54,13 +54,20 @@ public class RegisterFragment extends Fragment {
                 Log.d("register", "name" + name);
                 Log.d("register", "email" + email);
                 Log.d("register", "password" + password);
+
+
                 if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
                     Toast.makeText(getActivity(), "Password/Email or Password cannot be empty", Toast.LENGTH_SHORT).show();
 
                 } else {
                     DataServices.Account account = DataServices.register(name, email, password);
-                    Toast.makeText(getActivity(), "Successfull Registration", Toast.LENGTH_SHORT).show();
-                    mListener.loginIsSuccessful(account);
+                    if( account!=null){
+                        Toast.makeText(getActivity(), "Successfull Registration", Toast.LENGTH_SHORT).show();
+                        mListener.loginIsSuccessful(account);
+                    }else {
+
+                        Toast.makeText(getActivity(), "UnSuccessfull Registration", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
@@ -83,7 +90,11 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mListener = (SignupListener) context;
+        if(context instanceof SignupListener) {
+            mListener = (SignupListener) context;
+        }else{
+            throw  new RuntimeException((context.toString()+"must implement SignupListener"));
+        }
     }
 
     interface SignupListener {

@@ -77,7 +77,7 @@ public void setAccountDetails(DataServices.Account accountDetails){
             @Override
             public void onClick(View v) {
                 mListener.logout();
-                //getFragmentManager().beginTransaction().replace(R.id.rootView,new LoginFragment()).commit();
+
             }
         });
 
@@ -89,7 +89,11 @@ public void setAccountDetails(DataServices.Account accountDetails){
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mListener = (AccountListener) context;
+        if(context instanceof AccountListener) {
+            mListener = (AccountListener) context;
+        }else{
+            throw  new RuntimeException((context.toString()+"must implement AccountListener"));
+        }
     }
 
     interface AccountListener{

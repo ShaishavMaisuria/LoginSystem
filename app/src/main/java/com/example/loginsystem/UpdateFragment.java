@@ -57,13 +57,19 @@ public class UpdateFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_update, container, false);
 
        emailTextView= view.findViewById(R.id.textViewEmailUpdate);
-        emailTextView.setText(oldAccount.getEmail().toString());
+        nameView=view.findViewById(R.id.editTextPersonNameUpdate);
+        passwordView=view.findViewById(R.id.editTextTextPasswordUpdate);
 
+        emailTextView.setText(oldAccount.getEmail().toString());
+        passwordView.setText(oldAccount.getPassword().toString());
+        nameView.setText(oldAccount.getName().toString());
+
+        getActivity().setTitle("Update Account");
         view.findViewById(R.id.buttonSubmitUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               nameView=view.findViewById(R.id.editTextPersonNameUpdate);
-                passwordView=view.findViewById(R.id.editTextTextPasswordUpdate);
+//               nameView=view.findViewById(R.id.editTextPersonNameUpdate);
+//                passwordView=view.findViewById(R.id.editTextTextPasswordUpdate);
                 String newName=nameView.getText().toString();
                 String newPassword=passwordView.getText().toString();
 
@@ -71,8 +77,10 @@ public class UpdateFragment extends Fragment {
                     Toast.makeText(getActivity(),"Password/Email cannot be empty",Toast.LENGTH_SHORT).show();
 
                 }
-                DataServices.Account account = DataServices.update(oldAccount,newName,newPassword);
-                mListener.updateToAccount(account);
+                else {
+                    DataServices.Account account = DataServices.update(oldAccount, newName, newPassword);
+                    mListener.updateToAccount(account);
+                }
             }
         });
 
